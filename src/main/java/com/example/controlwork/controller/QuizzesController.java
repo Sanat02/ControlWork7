@@ -3,8 +3,11 @@ package com.example.controlwork.controller;
 import com.example.controlwork.dto.*;
 import com.example.controlwork.service.QuizResultService;
 import com.example.controlwork.service.QuizzesService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +20,16 @@ public class QuizzesController {
     private final QuizResultService quizResultService;
 
     @PostMapping
-    public HttpStatus saveQuiz(@RequestBody QuizzesDto quizzesDto) {
+    public ResponseEntity<String> saveQuiz(@RequestBody @Valid QuizzesDto quizzesDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+            bindingResult.getAllErrors().forEach(error -> {
+                errorMessage.append(error.getDefaultMessage()).append("; ");
+            });
+            return ResponseEntity.badRequest().body(errorMessage.toString());
+        }
         quizzesService.saveQuiz(quizzesDto);
-        return HttpStatus.OK;
+        return ResponseEntity.ok("saved successfully");
     }
 
 
@@ -34,23 +44,28 @@ public class QuizzesController {
     }
 
 
-
     @PostMapping("/{quizId}/solve")
-    public HttpStatus solveQuize(@PathVariable int quizId, @RequestBody AnswerListDto answerListDto) {
-        quizResultService.solveQuiz(quizId,answerListDto);
-        return HttpStatus.OK;
+    public ResponseEntity<String> solveQuize(@PathVariable int quizId, @RequestBody @Valid AnswerListDto answerListDto
+            , BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+            bindingResult.getAllErrors().forEach(error -> {
+                errorMessage.append(error.getDefaultMessage()).append("; ");
+            });
+            return ResponseEntity.badRequest().body(errorMessage.toString());
+        }
+        quizResultService.solveQuiz(quizId, answerListDto);
+        return ResponseEntity.ok("solve saved successfully");
     }
 
     @GetMapping("/{quizId}/results")
-    public ResultDto getResults(@RequestParam String email,@PathVariable int quizId){
-        return quizResultService.getResults(quizId,email);
+    public ResultDto getResults(@RequestParam String email, @PathVariable int quizId) {
+        return quizResultService.getResults(quizId, email);
     }
 
-    //GET /api/quizzes/{quizId}/leaderboard:
-    // Получение таблицы лидеров для викторины по её идентификатору.
-    // Таблица должна содержать пользователей отсортированных по результатам прохождения викторин.
+
     @GetMapping("/{quizId}/leaderboard")
-    public List<QuizResultDto> getLeaderBoard(@PathVariable int quizId){
+    public List<QuizResultDto> getLeaderBoard(@PathVariable int quizId) {
         return quizResultService.getLeaderBoard(quizId);
     }
 
