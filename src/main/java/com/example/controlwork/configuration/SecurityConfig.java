@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -31,45 +32,53 @@ public class SecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        String fetchUserQuery = "select email, password ,enabled \n " +
+        String fetchUserQuery = "select email, password ,userName \n " +
                 "from users \n" +
                 "where email = ?;";
 
-        String fetchRolesQuery = "select email, role  \n " +
-                "from users u, \n" +
-                "roles r \n" +
-                "where u.email = ? \n" +
-                "and u.role_id=r.id;";
+
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(fetchUserQuery)
-                .authoritiesByUsernameQuery(fetchRolesQuery);
+                .passwordEncoder(new BCryptPasswordEncoder());
+        ;
+
     }
 
+    //    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy
+//                        .STATELESS))
+//
+//                .httpBasic(Customizer.withDefaults())
+//
+//                .formLogin(AbstractHttpConfigurer::disable)
+//                .logout(AbstractHttpConfigurer::disable)
+//
+//                .csrf(AbstractHttpConfigurer::disable)
+//
+//                .authorizeHttpRequests(authorize -> {
+//                    authorize
+//                            .requestMatchers(HttpMethod.GET, "/users").fullyAuthenticated()
+//                            .anyRequest().permitAll();
+//                });
+//        return http.build();
+//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy
-                        .STATELESS))
-
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
-
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
-
-                .csrf(AbstractHttpConfigurer::disable)
-
-                .authorizeHttpRequests(authorize -> {
-                    authorize
-                            .requestMatchers(HttpMethod.POST, "/resumes").hasAuthority("JOB_SEEKER")
-                            .requestMatchers(HttpMethod.DELETE,"/resumes").hasAuthority("JOB_SEEKER")
-                            .requestMatchers(HttpMethod.PUT,"/resumes").hasAuthority("JOB_SEEKER")
-                            .requestMatchers(HttpMethod.POST, "/jobresume").hasAuthority("EMPLOYER")
-                            .requestMatchers(HttpMethod.DELETE, "/jobresume").hasAuthority("EMPLOYER")
-                            .requestMatchers(HttpMethod.PUT, "/jobresume").hasAuthority("EMPLOYER")
-                            .anyRequest().permitAll();
-                });
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/users")).fullyAuthenticated()
+                        .anyRequest().permitAll()
+                );
         return http.build();
     }
+
 
 }
