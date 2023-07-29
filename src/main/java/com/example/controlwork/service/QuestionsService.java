@@ -51,4 +51,8 @@ public class QuestionsService {
     public Question getQuestionById(int id){
         return questionsDao.getQuestionById(id);
     }
+
+    public List<Question> getQuestionsByQuizId(int id){
+        return questionsDao.getQuestionByQuizId(id);
+    }
 }

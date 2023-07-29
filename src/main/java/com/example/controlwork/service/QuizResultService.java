@@ -3,6 +3,7 @@ package com.example.controlwork.service;
 import com.example.controlwork.dao.QuizResultDao;
 import com.example.controlwork.dto.AnswerListDto;
 import com.example.controlwork.dto.AnswersDto;
+import com.example.controlwork.dto.ResultDto;
 import com.example.controlwork.model.Option;
 import com.example.controlwork.model.Question;
 import com.example.controlwork.model.QuizResult;
@@ -44,4 +45,27 @@ public class QuizResultService {
         quizResultDao.save(quizResult);
     }
 
+    public ResultDto getResults(int quizId, String email) {
+        int userId = userService.getIdByEmail(email);
+        System.out.println(userId);
+        System.out.println(quizId);
+        QuizResult quizResult = quizResultDao.getResultByIdAndEmail(4, 4);
+        String rightOption = "";
+        List<Question> questions = questionsService.getQuestionsByQuizId(quizId);
+        for (int i = 0; i < questions.size(); i++) {
+            List<Option> options = optionService.getOptionById(questions.get(i).getId());
+            for (int j = 0; j < options.size(); j++) {
+                if (options.get(j).isCorrect()) {
+                    rightOption = options.get(j).getOptionText();
+                }
+            }
+        }
+        int amount = quizResult.getScore() / 5;
+
+        return ResultDto.builder()
+                .score(quizResult.getScore())
+                .rightOption(rightOption)
+                .userRightAnswers(amount)
+                .build();
+    }
 }
