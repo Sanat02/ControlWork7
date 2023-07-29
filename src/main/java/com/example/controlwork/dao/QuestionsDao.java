@@ -2,6 +2,8 @@ package com.example.controlwork.dao;
 
 import com.example.controlwork.model.Question;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -39,5 +41,11 @@ public class QuestionsDao extends BaseDao {
     public int getAmountById(int id) {
         String sql = "SELECT COUNT(*) FROM questions WHERE quizId = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, id);
+    }
+
+    public List<Question> getQuestionByQuizId(int id) {
+        String sql = "SELECT * FROM questions WHERE quizId = ? ";
+        return jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(Question.class), id);
     }
 }

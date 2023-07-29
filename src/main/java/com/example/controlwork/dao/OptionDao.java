@@ -4,6 +4,7 @@ import com.example.controlwork.model.Option;
 import com.example.controlwork.model.Question;
 import com.example.controlwork.model.Quiz;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -37,4 +38,8 @@ public class OptionDao extends BaseDao {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
+    public List<Option> getOptionsByQuestionId(int questionId) {
+        String sql="SELECT * FROM options WHERE questionId = ?";
+        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Option.class),questionId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.controlwork.service;
 
-import com.example.controlwork.dto.QuizWithQuantity;
+import com.example.controlwork.dto.QuizDto;
+import com.example.controlwork.dto.QuizWithQuantityDto;
 import com.example.controlwork.dto.QuizzesDto;
 import com.example.controlwork.dao.QuizzesDao;
 import com.example.controlwork.model.Quiz;
@@ -31,11 +32,11 @@ public class QuizzesService {
 
     }
 
-    public List<QuizWithQuantity> getAllQuizzes() {
-        List<QuizWithQuantity> quizWithQuantities=new ArrayList<>();
+    public List<QuizWithQuantityDto> getAllQuizzes() {
+        List<QuizWithQuantityDto> quizWithQuantities=new ArrayList<>();
        List<Quiz> quizzes=quizzesDao.getAllQuizzes();
        for(int i=0;i< quizzes.size();i++){
-           QuizWithQuantity quizWithQuantity= QuizWithQuantity.builder()
+           QuizWithQuantityDto quizWithQuantity= QuizWithQuantityDto.builder()
                    .title(quizzes.get(i).getTitle())
                    .quantity(questionsService.getAmountById(quizzes.get(i).getId()))
                    .build();
@@ -44,5 +45,14 @@ public class QuizzesService {
        }
        return quizWithQuantities;
 
+    }
+
+    public QuizDto getQuizById(int quizId) {
+        Quiz quiz=quizzesDao.getQuizById(quizId);
+        QuizDto quizDto= QuizDto.builder()
+                .title(quiz.getTitle())
+                .questions(questionsService.getQuestionByQuizId(quizId))
+                .build();
+        return quizDto;
     }
 }

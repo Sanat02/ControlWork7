@@ -2,6 +2,7 @@ package com.example.controlwork.dao;
 
 import com.example.controlwork.model.Question;
 import com.example.controlwork.model.Quiz;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -32,9 +33,14 @@ public class QuizzesDao extends BaseDao {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
-    public List<Quiz> getAllQuizzes(){
-        String sql=" SELECT * FROM quizzes";
-        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Quiz.class));
+    public List<Quiz> getAllQuizzes() {
+        String sql = " SELECT * FROM quizzes";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Quiz.class));
     }
 
+    public Quiz getQuizById(int quizId) {
+        String sql = " SELECT * FROM quizzes WHERE id = ? ";
+        return DataAccessUtils.singleResult(jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(Quiz.class),quizId));
+    }
 }
