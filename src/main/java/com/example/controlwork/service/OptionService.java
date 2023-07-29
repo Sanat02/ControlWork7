@@ -18,6 +18,7 @@ public class OptionService {
     private final OptionDao optionDao;
 
     public void saveOption(OptionDto optionDto, int id) {
+        log.info("Saved option:"+optionDto.getOptionText());
         optionDao.save(Option.builder()
                 .optionText(optionDto.getOptionText())
                 .isCorrect(optionDto.isCorrect())
@@ -26,6 +27,7 @@ public class OptionService {
     }
 
     public List<OptionNoAnswerDto> getOptiontionsById(int questionId) {
+        log.info("Got options who have questionId:"+questionId);
         List<Option> options = optionDao.getOptionsByQuestionId(questionId);
         List<OptionNoAnswerDto> optionNoAnswerDtos = options.stream()
                 .map(e -> OptionNoAnswerDto.builder()
@@ -39,6 +41,7 @@ public class OptionService {
 
     public List<Option> getOptionById(int questionId)
     {
+        log.info("Got options who have questionId:"+questionId);
         return optionDao.getOptionsByQuestionId(questionId);
     }
 }

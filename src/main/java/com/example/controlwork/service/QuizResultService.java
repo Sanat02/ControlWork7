@@ -28,6 +28,7 @@ public class QuizResultService {
     private final OptionService optionService;
 
     public void solveQuiz(int quizId, AnswerListDto answerListDto) {
+        log.info("Solving quiz with id:"+quizId);
         int score = 0;
         for (AnswersDto answerDto : answerListDto.getAnswers()) {
             List<Option> options = optionService.getOptionById(answerDto.getQuestionId());
@@ -50,6 +51,7 @@ public class QuizResultService {
     }
 
     public ResultDto getResults(int quizId, String email) {
+        log.info("Got results of:"+email);
         int userId = userService.getIdByEmail(email);
         System.out.println(userId);
         System.out.println(quizId);
@@ -74,6 +76,7 @@ public class QuizResultService {
     }
 
     public List<QuizResultDto> getLeaderBoard(int quizId) {
+        log.info("Got leaderboard for quiz id:"+quizId);
         List<QuizResult> quizResults = quizResultDao.getResultsById(quizId);
         Collections.sort(quizResults, Comparator.comparingInt(QuizResult::getScore).reversed());
 

@@ -23,6 +23,7 @@ public class QuizzesService {
     private final QuestionsService questionsService;
 
     public void saveQuiz(QuizzesDto quizzesDto) {
+        log.info("Saved quiz:"+quizzesDto.getDescription());
         int quizId = quizzesDao.save(Quiz.builder()
                 .title(quizzesDto.getTitle())
                 .description(quizzesDto.getDescription())
@@ -35,6 +36,7 @@ public class QuizzesService {
     }
 
     public List<QuizWithQuantityDto> getAllQuizzes() {
+        log.info("Got all quizzes!");
         List<QuizWithQuantityDto> quizWithQuantities=new ArrayList<>();
        List<Quiz> quizzes=quizzesDao.getAllQuizzes();
        for(int i=0;i< quizzes.size();i++){

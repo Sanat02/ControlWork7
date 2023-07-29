@@ -19,6 +19,7 @@ public class QuestionsService {
     private final OptionService optionService;
 
     public void saveQuestions(List<QuestionDto> questionDtoList, int quizId) {
+        log.info("Saved questions with quiz id :"+quizId);
         for (int i = 0; i < questionDtoList.size(); i++) {
             Question question = Question.builder()
                     .questionText(questionDtoList.get(i).getQuestionText())
@@ -33,10 +34,12 @@ public class QuestionsService {
     }
 
     public int getAmountById(int quizId) {
+        log.info("Got amount of questions with quizId:"+quizId);
         return questionsDao.getAmountById(quizId);
     }
 
     public List<QuestionNoAnswerDto> getQuestionByQuizId(int id) {
+        log.info("Got  questions with quizId:"+id);
         List<Question> questions = questionsDao.getQuestionByQuizId(id);
         List<QuestionNoAnswerDto> questionNoAnswerDtos=questions.stream()
                 .map(e->QuestionNoAnswerDto.builder()

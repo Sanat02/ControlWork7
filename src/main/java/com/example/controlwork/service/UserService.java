@@ -19,6 +19,7 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     public void saveUser(UserDto userDto) {
+        log.info("Saved user:"+userDto.getEmail());
         userDao.save(User.builder()
                 .userName(userDto.getUserName())
                 .email(userDto.getEmail())
@@ -42,11 +43,14 @@ public class UserService {
         if (isExists) {
             String storedPassword = userDao.getPasswordByEmail(userDto.getEmail());
             if (encoder.matches(userDto.getPassword(), storedPassword)) {
+                log.info("Successful LOGIN!");
                 return "Successful LOGIN!";
             } else {
+                log.error("Incorrect PASSWORD!");
                 return "Incorrect PASSWORD!";
             }
         } else {
+            log.error("Such user does not exist!");
             return "Such user does not exist!";
         }
     }
