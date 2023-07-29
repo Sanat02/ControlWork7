@@ -55,5 +55,11 @@ public class UserDao extends BaseDao {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
+    public User getUserById(int id){
+        String sql="SELECT * FROM users where id = ?";
+        return DataAccessUtils.singleResult(jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(User.class),id));
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.example.controlwork.service;
 import com.example.controlwork.dao.QuizResultDao;
 import com.example.controlwork.dto.AnswerListDto;
 import com.example.controlwork.dto.AnswersDto;
+import com.example.controlwork.dto.QuizResultDto;
 import com.example.controlwork.dto.ResultDto;
 import com.example.controlwork.model.Option;
 import com.example.controlwork.model.Question;
@@ -12,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +53,7 @@ public class QuizResultService {
         int userId = userService.getIdByEmail(email);
         System.out.println(userId);
         System.out.println(quizId);
-        QuizResult quizResult = quizResultDao.getResultByIdAndEmail(4, 4);
+        QuizResult quizResult = quizResultDao.getResultByIdAndEmail(quizId, userId);
         String rightOption = "";
         List<Question> questions = questionsService.getQuestionsByQuizId(quizId);
         for (int i = 0; i < questions.size(); i++) {
@@ -67,5 +71,21 @@ public class QuizResultService {
                 .rightOption(rightOption)
                 .userRightAnswers(amount)
                 .build();
+    }
+
+    public List<QuizResultDto> getLeaderBoard(int quizId) {
+        List<QuizResult> quizResults = quizResultDao.getResultsById(quizId);
+        Collections.sort(quizResults, Comparator.comparingInt(QuizResult::getScore).reversed());
+
+        List<QuizResultDto> leaderBoard = quizResults.stream()
+                .map(e -> QuizResultDto.builder()
+                        .id(e.getId())
+                        .userDto(userService.getUserById(e.getUserId()))
+                        .quizId(e.getQuizId())
+                        .score(e.getScore())
+                        .build()
+                ).collect(Collectors.toList());
+
+        return leaderBoard;
     }
 }

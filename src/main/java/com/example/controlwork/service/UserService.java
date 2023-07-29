@@ -54,4 +54,13 @@ public class UserService {
     public int getIdByEmail(String email){
         return  userDao.getIdByEmail(email);
     }
+
+    public UserDto getUserById(int userId){
+        User user=userDao.getUserById(userId);
+        return UserDto.builder()
+                .userName(user.getUserName())
+                .email(user.getEmail())
+                .id(user.getId())
+                .build();
+    }
 }

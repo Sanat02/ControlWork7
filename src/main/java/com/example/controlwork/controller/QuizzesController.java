@@ -41,15 +41,17 @@ public class QuizzesController {
         return HttpStatus.OK;
     }
 
-    //GET /api/quizzes/{quizId}/results:
-    // Получение результатов прохождения викторины по её идентификатору.
-    // В ответе должны быть правильные ответы и оценка прохождения
-    // (например, количество правильных ответов из общего числа вопросов).
-
     @GetMapping("/{quizId}/results")
     public ResultDto getResults(@RequestParam String email,@PathVariable int quizId){
-//        String email= emailDto.getEmail();
         return quizResultService.getResults(quizId,email);
+    }
+
+    //GET /api/quizzes/{quizId}/leaderboard:
+    // Получение таблицы лидеров для викторины по её идентификатору.
+    // Таблица должна содержать пользователей отсортированных по результатам прохождения викторин.
+    @GetMapping("/{quizId}/leaderboard")
+    public List<QuizResultDto> getLeaderBoard(@PathVariable int quizId){
+        return quizResultService.getLeaderBoard(quizId);
     }
 
 }

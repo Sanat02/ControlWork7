@@ -9,10 +9,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.Objects;
+
 @Component
 
-public class QuizResultDao extends BaseDao{
+public class QuizResultDao extends BaseDao {
     QuizResultDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         super(jdbcTemplate, namedParameterJdbcTemplate);
     }
@@ -32,9 +34,15 @@ public class QuizResultDao extends BaseDao{
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
-    public QuizResult getResultByIdAndEmail(int quizId,int userId){
-        String sql="SELECT * FROM quiz_result WHERE quizId = ? and userId = ?";
+    public QuizResult getResultByIdAndEmail(int quizId, int userId) {
+        String sql = "SELECT * FROM quiz_result WHERE quizId = ? and userId = ?";
         return DataAccessUtils.singleResult(jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(QuizResult.class),quizId,userId));
+                new BeanPropertyRowMapper<>(QuizResult.class), quizId, userId));
     }
+
+    public List<QuizResult> getResultsById(int quizId) {
+        String sql = "SELECT * FROM quiz_result WHERE quizId = ? ";
+        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(QuizResult.class), quizId);
+    }
+
 }
