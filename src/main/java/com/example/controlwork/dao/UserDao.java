@@ -24,6 +24,11 @@ public class UserDao extends BaseDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
+    public int getIdByEmail(String email) {
+        String sql = "SELECT id FROM users WHERE email = ? ";
+        return jdbcTemplate.queryForObject(sql, Integer.class, email);
+    }
+
     public boolean isExists(String email) {
         String sql = "SELECT CASE WHEN EXISTS(SELECT * FROM users WHERE email = ?) THEN TRUE ELSE FALSE END";
         return jdbcTemplate.queryForObject(sql, Boolean.class, email);

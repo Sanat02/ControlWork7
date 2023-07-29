@@ -50,4 +50,8 @@ public class UserService {
             return "Such user does not exist!";
         }
     }
+
+    public int getIdByEmail(String email){
+        return  userDao.getIdByEmail(email);
+    }
 }
