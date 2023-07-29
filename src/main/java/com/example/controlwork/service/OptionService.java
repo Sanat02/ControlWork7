@@ -1,13 +1,11 @@
 package com.example.controlwork.service;
 
-import com.example.controlwork.configuration.dto.OptionDto;
+import com.example.controlwork.dto.OptionDto;
 import com.example.controlwork.dao.OptionDao;
 import com.example.controlwork.model.Option;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

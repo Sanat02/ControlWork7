@@ -1,13 +1,13 @@
 package com.example.controlwork.controller;
 
-import com.example.controlwork.configuration.dto.QuizzesDto;
+import com.example.controlwork.dto.QuizWithQuantity;
+import com.example.controlwork.dto.QuizzesDto;
 import com.example.controlwork.service.QuizzesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -18,5 +18,11 @@ public class QuizzesController {
     public HttpStatus saveQuiz(@RequestBody QuizzesDto quizzesDto) {
         quizzesService.saveQuiz(quizzesDto);
         return HttpStatus.OK;
+    }
+    
+
+    @GetMapping
+    public List<QuizWithQuantity> getAllQuizzes(){
+        return quizzesService.getAllQuizzes();
     }
 }

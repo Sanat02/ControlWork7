@@ -1,6 +1,5 @@
 package com.example.controlwork.model;
 
-import com.example.controlwork.configuration.dto.OptionDto;
 import lombok.*;
 
 @Data

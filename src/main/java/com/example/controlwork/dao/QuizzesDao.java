@@ -2,11 +2,13 @@ package com.example.controlwork.dao;
 
 import com.example.controlwork.model.Question;
 import com.example.controlwork.model.Quiz;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -28,6 +30,11 @@ public class QuizzesDao extends BaseDao {
             return ps;
         }, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
+    }
+
+    public List<Quiz> getAllQuizzes(){
+        String sql=" SELECT * FROM quizzes";
+        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Quiz.class));
     }
 
 }

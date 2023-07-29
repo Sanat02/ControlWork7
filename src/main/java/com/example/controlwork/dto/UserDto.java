@@ -1,4 +1,4 @@
-package com.example.controlwork.configuration.dto;
+package com.example.controlwork.dto;
 
 import lombok.Builder;
 import lombok.Data;

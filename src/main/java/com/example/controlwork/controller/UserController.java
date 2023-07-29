@@ -1,6 +1,6 @@
 package com.example.controlwork.controller;
 
-import com.example.controlwork.configuration.dto.UserDto;
+import com.example.controlwork.dto.UserDto;
 import com.example.controlwork.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.controlwork.service;
 
-import com.example.controlwork.configuration.dto.UserDto;
+import com.example.controlwork.dto.UserDto;
 import com.example.controlwork.dao.UserDao;
 import com.example.controlwork.model.User;
 import lombok.RequiredArgsConstructor;

@@ -35,4 +35,9 @@ public class QuestionsDao extends BaseDao {
         }, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
+
+    public int getAmountById(int id) {
+        String sql = "SELECT COUNT(*) FROM questions WHERE quizId = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, id);
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.controlwork.service;
 
-import com.example.controlwork.configuration.dto.QuestionDto;
+import com.example.controlwork.dto.QuestionDto;
 import com.example.controlwork.dao.QuestionsDao;
 import com.example.controlwork.model.Question;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +28,9 @@ public class QuestionsService {
             }
 
         }
+    }
+
+    public int getAmountById(int quizId){
+        return questionsDao.getAmountById(quizId);
     }
 }
