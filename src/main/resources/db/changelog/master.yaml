@@ -1,3 +1,33 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/initial/019_create_categories_table.yaml
+      file: db/changelog/initial/001_create_users_table.yaml
+  - include:
+      file: db/changelog/initial/002_insert_users_table.yaml
+  - include:
+      file: db/changelog/initial/003_create_quizzes_table.yaml
+  - include:
+      file: db/changelog/initial/004_add_contstarinsfk_quizzes.yaml
+  - include:
+      file: db/changelog/initial/005_create_quiz_result_table.yaml
+  - include:
+      file: db/changelog/initial/006_add_constraintsfk_result.yaml
+  - include:
+      file: db/changelog/initial/007_create_questions_table.yaml
+  - include:
+      file: db/changelog/initial/008_add_constraintfk_questions.yaml
+  - include:
+      file: db/changelog/initial/009_insert_quizzes.yaml
+  - include:
+      file: db/changelog/initial/010_insert_quiz_result.yaml
+  - include:
+      file: db/changelog/initial/011_insert_questions.yaml
+  - include:
+      file: db/changelog/initial/012_create_options_table.yaml
+  - include:
+      file: db/changelog/initial/013_insert_constarintfk_options.yaml
+  - include:
+      file: db/changelog/initial/014_insert_options.yaml
+
+
+
+

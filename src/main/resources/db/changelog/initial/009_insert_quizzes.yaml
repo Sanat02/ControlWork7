@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: insertDataQuizzes
+      author: Sanat
+      changes:
+        - sql:
+            sql: |
+              insert into quizzes(creatorId, title, description)
+              VALUES (
+                1, 
+                'Geography', 
+                'world and Kyrgyzstan geography '           
+              ),
+              (
+                1,
+                'History',
+                'World History'
+              ),
+              (
+                 2,
+                 'Movies',
+                 'American Movies '
+              
+              )

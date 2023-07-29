@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop  fk_result_user
+      author: Sanat
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: quiz_result
+            constraintName: fk_result_user
+  - changeSet:
+      id: drop  fk_result_quiz
+      author: Sanat
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: quiz_result
+            constraintName: fk_result_quiz
+  - changeSet:
+      id: add fk_result_user
+      author: Sanat
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: quiz_result
+            baseColumnNames: userId
+            constraintName: fk_result_user
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: cascade
+            onUpdate: cascade
+  - changeSet:
+      id: add fk_result_quiz
+      author: Sanat
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: quiz_result
+            baseColumnNames: quizId
+            constraintName: fk_result_quiz
+            referencedTableName: quizzes
+            referencedColumnNames: id
+            onDelete: cascade
+            onUpdate: cascade

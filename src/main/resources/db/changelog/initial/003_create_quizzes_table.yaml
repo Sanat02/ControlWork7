@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 019-create-categories-table
+      id: 003-create-quizzes-table
       author: Sanat
       changes:
         - createTable:
-            tableName: categories
+            tableName: quizzes
             columns:
               - column:
                   name: id
@@ -14,11 +14,20 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: name
+                  name: creatorId
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_quizzes_creator
+                    references: users(id)
+                    onDelete: CASCADE
+                    onUpdate: CASCADE
+              - column:
+                  name: title
                   type: varchar(55)
               - column:
                   name: description
-                  type: varchar
+                  type: varchar(55)
 
 
 

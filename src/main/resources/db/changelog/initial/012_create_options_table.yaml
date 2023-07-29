@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 012-create-options-table
+      author: Sanat
+      changes:
+        - createTable:
+            tableName: options
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: questionId
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_options_question
+                    references: questions(id)
+                    onDelete: CASCADE
+                    onUpdate: CASCADE
+              - column:
+                  name: optionText
+                  type: varchar(100)
+              - column:
+                  name: isCorrect
+                  type: boolean

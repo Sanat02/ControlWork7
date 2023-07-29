@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: insertDataResult
+      author: Sanat
+      changes:
+        - sql:
+            sql: |
+              insert into quiz_result(userId, quizId, score)
+              VALUES (
+                2, 
+                4, 
+                15           
+              ),
+              (
+                2,
+                5,
+                10
+              )

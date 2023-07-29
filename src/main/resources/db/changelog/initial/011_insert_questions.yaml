@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: insertDataQuestions
+      author: Sanat
+      changes:
+        - sql:
+            sql: |
+              insert into questions(quizId,questionText)
+              VALUES (
+                4, 
+                'Biggest mountain in KR'         
+              ),
+              (
+                4,
+                'Longest river'
+              ),
+              (
+                4,
+                'lower point in earth'
+              ),
+              (
+                5,
+                'father of history'
+              )

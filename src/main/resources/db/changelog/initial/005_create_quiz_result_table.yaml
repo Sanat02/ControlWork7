@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-quiz-result-table
+      author: Sanat
+      changes:
+        - createTable:
+            tableName: quiz_result
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: userId
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_result_user
+                    references: users(id)
+                    onDelete: CASCADE
+                    onUpdate: CASCADE
+              - column:
+                  name: quizId
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_result_quiz
+                    references: quizzes(id)
+                    onDelete: CASCADE
+                    onUpdate: CASCADE
+              - column:
+                  name: score
+                  type: int

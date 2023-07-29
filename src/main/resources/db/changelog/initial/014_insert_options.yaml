@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insertDataOptions
+      author: Sanat
+      changes:
+        - sql:
+            sql: |
+              insert into options(questionId, optionText, isCorrect)
+              VALUES (
+                1, 
+                'Everest', 
+                true           
+              ),
+              (
+                2,
+                'Amazon',
+                true
+              ),
+              (
+                 3,
+                 'Dead vales',
+                 true
+              )

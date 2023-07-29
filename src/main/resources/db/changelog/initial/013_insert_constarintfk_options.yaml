@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop  fk_options_question
+      author: Sanat
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: options
+            constraintName: fk_options_question
+  - changeSet:
+      id: add fk_options_question
+      author: Sanat
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: options
+            baseColumnNames: questionId
+            constraintName: fk_options_question
+            referencedTableName: questions
+            referencedColumnNames: id
+            onDelete: cascade
+            onUpdate: cascade
