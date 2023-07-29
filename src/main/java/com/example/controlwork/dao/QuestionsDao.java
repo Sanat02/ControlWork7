@@ -48,4 +48,11 @@ public class QuestionsDao extends BaseDao {
         return jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(Question.class), id);
     }
+
+    public Question getQuestionById(int id) {
+        String sql = "SELECT * FROM questions WHERE id = ? ";
+        return DataAccessUtils.singleResult(jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(Question.class), id));
+
+    }
 }

@@ -43,4 +43,6 @@ public class QuizzesDao extends BaseDao {
         return DataAccessUtils.singleResult(jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(Quiz.class),quizId));
     }
+
+
 }

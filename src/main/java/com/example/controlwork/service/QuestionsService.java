@@ -47,4 +47,8 @@ public class QuestionsService {
                 ).collect(Collectors.toList());
         return questionNoAnswerDtos;
     }
+
+    public Question getQuestionById(int id){
+        return questionsDao.getQuestionById(id);
+    }
 }

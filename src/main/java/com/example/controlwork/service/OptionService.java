@@ -36,4 +36,9 @@ public class OptionService {
                 ).collect(Collectors.toList());
         return optionNoAnswerDtos;
     }
+
+    public List<Option> getOptionById(int questionId)
+    {
+        return optionDao.getOptionsByQuestionId(questionId);
+    }
 }
